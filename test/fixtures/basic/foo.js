@@ -1,4 +1,3 @@
 'use strict';
 
-module.exports = function(gulp, plug, plugins) {
-};
+module.exports = function(taskName, gulp, plug, plugins) {};
