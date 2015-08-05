@@ -11,7 +11,7 @@ gulpplug
 [![Code Climate GPA](https://img.shields.io/codeclimate/github/simbo/gulpplug.svg?style=flat-square)](https://codeclimate.com/github/simbo/gulpplug)
 [![Code Climate Test Coverage](https://img.shields.io/codeclimate/coverage/github/simbo/gulpplug.svg?style=flat-square)](https://codeclimate.com/github/simbo/gulpplug)
 
-![gulpplug](https://raw.githubusercontent.com/simbo/gulpplug/master/gulpplug.svg)
+![gulpplug](https://raw.github.com/simbo/gulpplug/master/gulpplug.png)
 
 ---
 
