@@ -1,0 +1,41 @@
+{
+  "name": "gulpplug",
+  "description": "A small wrapper for gulp, that requires tasks from files and auto-loads gulp plugins.",
+  "keywords": [],
+  "author": "Simon Lepel <simbo@simbo.de> (http://simbo.de)",
+  "license": "MIT",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/simbo/gulpplug.git"
+  },
+  "bugs": "https://github.com/simbo/gulpplug/issues",
+  "main": "lib/index.js",
+  "files": [],
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "engines": {
+    "node": ">=0.11.10",
+    "npm": ">=1.3.22"
+  },
+  "scripts": {
+    "test": "mocha -R spec",
+    "lint": "jshint ./lib/*.js & jscs ./lib/*.js",
+    "cover": "istanbul cover ./node_modules/.bin/_mocha -- -R spec",
+    "watch": "mocha -R spec -w",
+    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info"
+  },
+  "devDependencies": {
+    "codeclimate-test-reporter": "^0.1.0",
+    "istanbul": "^0.3.17",
+    "jscs": "^2.0.0",
+    "jshint": "^2.8.0",
+    "mocha": "^2.2.5"
+  },
+  "dependencies": {
+    "glob": "^5.0.14",
+    "auto-plug": "^1.0.2"
+  }
+}
