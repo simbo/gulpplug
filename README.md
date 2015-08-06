@@ -17,6 +17,7 @@ gulpplug
 
 ---
 
+
 ## Install
 
 ``` bash
@@ -57,15 +58,29 @@ module.exports = function(taskName, gulp, plug, plugins) {
 };
 ```
 
+You can organize your task files in subfolders.  
+For example, this will add the tasks `foo` and `bar:baz`:
+
+``` text
+my-project/
+ ├─╸ .gulpplug/
+ │    └─╸ tasks/
+ │         ├─╸ bar/
+ │         │    └─╸ baz.js
+ │         └─╸ foo.js
+ └─╸ Gulpfile.js
+```
+
 
 ### Help task and descriptions
 
-*gulpplug* will create a help tasks to display available tasks and their
-descriptions.
+You can add a automatically generated help task by calling
+`plug.addHelpTask()`.
 
-Call it via `gulp help`.
+Run the task via `gulp help`. It will show all available tasks with a 
+description if available.
 
-Add a description like this:
+Add a task description:
 
 ``` javascript
 module.exports = [
@@ -78,9 +93,9 @@ module.exports = [
 
 ### Loading gulp plugins
 
-By calling `gulpplug.loadPlugins()`, *gulpplug* will use
-[auto-plug](https://github.com/simbo/auto-plug) to load gulp plugins defined in 
-your projects `package.json`. You can pass auto-plug options to the method.
+By calling `plug.loadPlugins()`, [auto-plug](https://github.com/simbo/auto-plug)
+will be used to load gulp plugins defined in your projects `package.json`. You
+can pass auto-plug options to the method.
 
 
 ## License
