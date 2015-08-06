@@ -1,15 +1,17 @@
 'use strict';
 
 var assert = require('assert'),
-    childProcess = require('child_process'),
-    gulpBin = './../../../node_modules/.bin/gulp',
+    intercept = require('intercept-stdout'),
     path = require('path'),
+    stripAnsi = require('strip-ansi'),
+    util = require('util');
+
+var pkg = require('..'),
     pkgJson = require('../package.json'),
     pkgName = pkgJson.name,
-    pkg = require('..'),
     fixturesDir = path.join(path.dirname(__filename), 'fixtures'),
     expectations = {
-        basic: [{
+        tasks: [{
             file: 'bar/baz.js',
             name: 'bar:baz',
             description: 'baz description',
@@ -22,15 +24,24 @@ var assert = require('assert'),
             name: 'help',
             description: 'display help message',
             fn: function() {}
-        }]
+        }],
+        help: [
+            '==================================================\n',
+            'Available Tasks:\n',
+            'bar:baz ➜ baz description\n',
+            'foo ➜ (no description)\n',
+            'help ➜ display help message\n',
+            '==================================================\n'
+        ]
     };
 
 describe(pkgName, function() {
 
-    it('should find and add tasks and create a help task', function() {
+    it('should automatically create tasks', function() {
         pkg.tasksDir = path.join(fixturesDir, 'basic');
         pkg.addTasks();
-        assert.deepEqual(JSON.stringify(pkg.getTasks()), JSON.stringify(expectations.basic));
+        assert.deepEqual(JSON.stringify(pkg.getTasks()), JSON.stringify(expectations.tasks));
+        assert.equal(pkg.gulp.hasTask('bar:baz') && pkg.gulp.hasTask('foo') && pkg.gulp.hasTask('help'), true);
     });
 
     it('should load gulp plugins and accept auto-plug options', function() {
@@ -39,11 +50,19 @@ describe(pkgName, function() {
         assert.deepEqual(pkg.plugins, {util: require('gulp-util')});
     });
 
-    it('should display a help message', function() {
-        var stdout = childProcess.execSync(gulpBin, {
-                cwd: path.join(fixturesDir, 'gulp')
-            }).toString();
-        assert.equal(stdout.search(/(\[\d\d:\d\d:\d\d\][^\n]+\n*){11}/g), 0)
+    it('should display a help message', function(done) {
+        var log = [],
+            lines = 0,
+            stopIntercept = intercept(function(msg) {
+                if (++lines%2 === 0) {
+                    log.push(stripAnsi(msg));
+                }
+            });
+        pkg.gulp.start('help', function() {
+            stopIntercept();
+            assert.deepEqual(log, expectations.help);
+            done();
+        });
     });
 
 });

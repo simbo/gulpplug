@@ -2,5 +2,7 @@
 
 module.exports = [
     'baz description',
-    function(taskName, gulp, plug, plugins) {}
+    function(taskName, gulp, plug, plugins) {
+        gulp.task(taskName, function() {});
+    }
 ];
