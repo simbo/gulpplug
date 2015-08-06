@@ -11,20 +11,18 @@ var pkg = require('..'),
     pkgName = pkgJson.name,
     fixturesDir = path.join(path.dirname(__filename), 'fixtures'),
     expectations = {
-        tasks: [{
-            file: 'bar/baz.js',
-            name: 'bar:baz',
-            description: 'baz description',
-            fn: function() {}
-        }, {
-            file: 'foo.js',
-            name: 'foo',
-            fn: function() {}
-        }, {
-            name: 'help',
-            description: 'display help message',
-            fn: function() {}
-        }],
+        tasks: [
+            {
+                file: 'bar/baz.js',
+                name: 'bar:baz',
+                description: 'baz description',
+                fn: function() {}
+            }, {
+                file: 'foo.js',
+                name: 'foo',
+                fn: function() {}
+            }
+        ],
         help: [
             '==================================================\n',
             'Available Tasks:\n',
@@ -40,14 +38,19 @@ describe(pkgName, function() {
     it('should automatically create tasks', function() {
         pkg.tasksDir = path.join(fixturesDir, 'basic');
         pkg.addTasks();
-        assert.deepEqual(JSON.stringify(pkg.getTasks()), JSON.stringify(expectations.tasks));
-        assert.equal(pkg.gulp.hasTask('bar:baz') && pkg.gulp.hasTask('foo') && pkg.gulp.hasTask('help'), true);
+        assert.equal(JSON.stringify(pkg.getTasks()), JSON.stringify(expectations.tasks));
+        assert.equal(pkg.gulp.hasTask('bar:baz') && pkg.gulp.hasTask('foo'), true);
     });
 
     it('should load gulp plugins and accept auto-plug options', function() {
         pkg.parentDir = path.dirname(path.dirname(__filename));
         pkg.loadPlugins({lazy: false});
         assert.deepEqual(pkg.plugins, {util: require('gulp-util')});
+    });
+
+    it('should add a help task', function() {
+        pkg.addHelpTask();
+        assert.equal(pkg.gulp.hasTask('help'), true);
     });
 
     it('should display a help message', function(done) {
