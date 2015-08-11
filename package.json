@@ -11,7 +11,11 @@
   },
   "bugs": "https://github.com/simbo/gulpplug/issues",
   "main": "lib/index.js",
-  "files": [],
+  "files": [
+    "lib/index.js",
+    "LICENSE",
+    "README.md"
+  ],
   "os": [
     "darwin",
     "linux"
