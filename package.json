@@ -10,11 +10,12 @@
     "url": "git://github.com/simbo/gulpplug.git"
   },
   "bugs": "https://github.com/simbo/gulpplug/issues",
-  "main": "lib/index.js",
+  "main": "index.js",
   "files": [
-    "lib/index.js",
-    "LICENSE",
-    "README.md"
+    "lib/plug.js",
+    "index.js",
+    "README.md",
+    "LICENSE"
   ],
   "os": [
     "darwin",
