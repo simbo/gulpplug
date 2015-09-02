@@ -41,14 +41,16 @@ plug.loadPlugins().addTasks();
 *gulpplug* looks for a folder called `.gulpplug/` in the same directory where
 your `Gulpfile.js` is.
 
+See also `example/`.
+
 
 ### Defining Tasks
 
-All files matching `**/*.js` within `.gulpplug/` will be required and 
-should return a function to create a task.
+All files matching `**/*.js` within `.gulpplug/` will be required and should 
+return a function to create a task.
 
-For example, `.gulpplug/foo.js` will be executable via `gulp foo` and
-could look like this:
+For example, `.gulpplug/foo.js` will be executable via `gulp foo` and could 
+look like this:
 
 ``` javascript
 module.exports = function() {
@@ -56,6 +58,20 @@ module.exports = function() {
         .pipe(this.plugins.someGulpPlugin())
         .pipe(this.gulp.dest(…));
     });
+};
+```
+
+'this' is your current 'Plug' instance, delivering 'gulp', 'gulp-util' and 
+'chalk' as properties. (As well as other properties and methods you may want to 
+use - take a look at the sourcecode.)
+
+``` javascript
+module.exports = function(done) {
+    this.util.log(chalk.green('Starting async things…'));
+    setTimeout(function() {
+        this.util.log(chalk.red('Async stuff done.'));
+        done();
+    }.bind(this)), 100);
 };
 ```
 
