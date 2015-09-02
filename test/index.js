@@ -90,8 +90,14 @@ describe(pkgName, function() {
             log = '';
         this.timeout(10000);
         exec('gulp', execOptions, function(error, stdout) {
+            if (error) {
+                throw error;
+            }
             log = log + stdout.replace(regexpLogtime, '');
             exec('gulp hello', execOptions, function(error, stdout) {
+                if (error) {
+                    throw error;
+                }
                 log = (log + stdout.replace(regexpLogtime, ''))
                     .replace(/Using\ gulpfile[^\n]+\n/ig, '')
                     .replace(/(Finished\ [a-z']+)\ after[^\n]+\n/ig, '$1\n');
