@@ -4,9 +4,9 @@ var assert = require('assert'),
     intercept = require('intercept-stdout'),
     path = require('path'),
     stripAnsi = require('strip-ansi'),
-    util = require('util');
+    gulp = require('gulp');
 
-var pkg = require('..'),
+var pkg = require('..')(gulp),
     pkgJson = require('../package.json'),
     pkgName = pkgJson.name,
     fixturesDir = path.join(path.dirname(__filename), 'fixtures'),
@@ -43,7 +43,7 @@ describe(pkgName, function() {
     });
 
     it('should load gulp plugins and accept auto-plug options', function() {
-        pkg.parentDir = path.dirname(path.dirname(__filename));
+        pkg.cwd = path.dirname(path.dirname(__filename));
         pkg.loadPlugins({lazy: false});
         assert.deepEqual(pkg.plugins, {util: require('gulp-util')});
     });
@@ -57,7 +57,7 @@ describe(pkgName, function() {
         var log = [],
             lines = 0,
             stopIntercept = intercept(function(msg) {
-                if (++lines%2 === 0) {
+                if (++lines % 2 === 0) {
                     log.push(stripAnsi(msg));
                 }
             });
