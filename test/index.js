@@ -30,7 +30,20 @@ var pkg = require('..')(gulp),
             'foo ➜ (no description)\n',
             'help ➜ display help message\n',
             '==================================================\n'
-        ]
+        ],
+        exec: 'Starting \'help\'...\n'
+            + '==================================================\n'
+            + 'Available Tasks:\n'
+            + 'hello ➜ Awesome task\n'
+            + 'help ➜ display help message\n'
+            + '==================================================\n'
+            + 'Finished \'help\'\n'
+            + 'Starting \'default\'...\n'
+            + 'Finished \'default\'\n'
+            + 'Starting \'hello\'...\n'
+            + 'Hello!\n'
+            + 'Done.\n'
+            + 'Finished \'hello\'\n'
     };
 
 describe(pkgName, function() {
@@ -65,6 +78,26 @@ describe(pkgName, function() {
             stopIntercept();
             assert.deepEqual(log, expectations.help);
             done();
+        });
+    });
+
+    it('should work in its normal environment', function(done) {
+        var exec = require('child_process').exec,
+            execOptions = {
+                cwd: path.join(process.cwd(), 'example')
+            },
+            regexpLogtime = /\[[0-9]{2}:[0-9]{2}:[0-9]{2}\]\ /ig,
+            log = '';
+        this.timeout(10000);
+        exec('gulp', execOptions, function(error, stdout) {
+            log = log + stdout.replace(regexpLogtime, '');
+            exec('gulp hello', execOptions, function(error, stdout) {
+                log = (log + stdout.replace(regexpLogtime, ''))
+                    .replace(/Using\ gulpfile[^\n]+\n/ig, '')
+                    .replace(/(Finished\ [a-z']+)\ after[^\n]+\n/ig, '$1\n');
+                assert.equal(log, expectations.exec);
+                done();
+            });
         });
     });
 
