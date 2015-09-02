@@ -31,19 +31,19 @@ var pkg = require('..')(gulp),
             'help ➜ display help message\n',
             '==================================================\n'
         ],
-        exec: 'Starting \'help\'...\n'
-            + '==================================================\n'
-            + 'Available Tasks:\n'
-            + 'hello ➜ Awesome task\n'
-            + 'help ➜ display help message\n'
-            + '==================================================\n'
-            + 'Finished \'help\'\n'
-            + 'Starting \'default\'...\n'
-            + 'Finished \'default\'\n'
-            + 'Starting \'hello\'...\n'
-            + 'Hello!\n'
-            + 'Done.\n'
-            + 'Finished \'hello\'\n'
+        exec: 'Starting \'help\'...\n' +
+            '==================================================\n' +
+            'Available Tasks:\n' +
+            'hello ➜ Awesome task\n' +
+            'help ➜ display help message\n' +
+            '==================================================\n' +
+            'Finished \'help\'\n' +
+            'Starting \'default\'...\n' +
+            'Finished \'default\'\n' +
+            'Starting \'hello\'...\n' +
+            'Hello!\n' +
+            'Done.\n' +
+            'Finished \'hello\'\n'
     };
 
 describe(pkgName, function() {
