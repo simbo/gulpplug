@@ -17,6 +17,18 @@ gulpplug
 
 ---
 
+<!-- MarkdownTOC -->
+
+- [Install](#install)
+- [Usage](#usage)
+    - [Defining Tasks](#defining-tasks)
+    - [Help task and descriptions](#help-task-and-descriptions)
+    - [Loading gulp plugins](#loading-gulp-plugins)
+    - [Plug Class](#plug-class)
+- [License](#license)
+
+<!-- /MarkdownTOC -->
+
 
 ## Install
 
@@ -61,9 +73,11 @@ module.exports = function() {
 };
 ```
 
-'this' is your current 'Plug' instance, delivering 'gulp', 'gulp-util' and 
-'chalk' as properties. (As well as other properties and methods you may want to 
-use - take a look at the sourcecode.)
+`this` is your current [`Plug`](#plug-class) instance, delivering `gulp`, 
+[`gulp-util`](https://github.com/gulpjs/gulp-util) and 
+[`chalk`](https://github.com/chalk/chalk) as properties. 
+(As well as other properties and methods you may want to use - take a look at 
+the [sourcecode](https://github.com/simbo/gulpplug/blob/master/lib/plug.js).)
 
 ``` javascript
 module.exports = function(done) {
@@ -112,6 +126,32 @@ module.exports = [
 By calling `plug.loadPlugins()`, [auto-plug](https://github.com/simbo/auto-plug)
 will be used to load gulp plugins defined in your projects `package.json`. You
 can pass auto-plug options to the method.
+
+
+### Plug Class
+
+By calling `require('gulpplug')(…)` you get a new instance of `Plug`, which 
+accepts up to 3 arguments:
+
+  - `gulp` (required)  
+    current gulp instance
+  - `tasksDir`  
+    path to tasks folder, relative to current working directory; defaults to 
+    `.gulpplug`
+  - `cwd`  
+    current working directory (where your `Gulpfile.js` and `package.json` 
+    are); defaults *gulpplug*'s parent module directory
+
+You can also access the class directly.
+
+``` javascript
+var path = require('path'),
+    gulp = require('gulp'),
+    Plug = require('gulpplug').Plug,
+    tasksDir = 'my-gulp-tasks',
+    cwd = path.dirname(__filename),
+    plug = new Plug(gulp, tasksDir, cwd);
+```
 
 
 ## License
