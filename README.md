@@ -24,7 +24,7 @@ gulpplug
 npm install --save gulpplug
 ```
 
-You don't necessarily need `gulp` anymore as a dependency of your project.
+You still need `gulp` as a dependency of your project.
 
 
 ## Usage
@@ -32,7 +32,9 @@ You don't necessarily need `gulp` anymore as a dependency of your project.
 Your `Gulpfile.js` could look like this:
 
 ``` javascript
-var plug = require('gulpplug');
+var gulp = require('gulp'),
+    plug = require('gulpplug')(gulp);
+
 plug.loadPlugins().addTasks();
 ```
 
@@ -42,18 +44,17 @@ your `Gulpfile.js` is.
 
 ### Defining Tasks
 
-All files matching `**/*.js` within `.gulpplug/tasks/` will be required and 
+All files matching `**/*.js` within `.gulpplug/` will be required and 
 should return a function to create a task.
 
-For example, `.gulpplug/tasks/foo.js` will be executable via `gulp foo` and
+For example, `.gulpplug/foo.js` will be executable via `gulp foo` and
 could look like this:
 
 ``` javascript
-module.exports = function(taskName, gulp, plug, plugins) {
-    gulp.task(taskName, function() {
-        return gulp.src(…)
-            .pipe(plugins.someGulpPlugin())
-            .pipe(gulp.dest(…));
+module.exports = function() {
+    return this.gulp.src(…)
+        .pipe(this.plugins.someGulpPlugin())
+        .pipe(this.gulp.dest(…));
     });
 };
 ```
@@ -64,10 +65,9 @@ For example, this will add the tasks `foo` and `bar:baz`:
 ``` text
 my-project/
  ├─╸ .gulpplug/
- │    └─╸ tasks/
- │         ├─╸ bar/
- │         │    └─╸ baz.js
- │         └─╸ foo.js
+ │    ├─╸ bar/
+ │    │    └─╸ baz.js
+ │    └─╸ foo.js
  └─╸ Gulpfile.js
 ```
 
@@ -85,7 +85,7 @@ Add a task description:
 ``` javascript
 module.exports = [
     'this task does awesome stuff',
-    function(taskName, gulp, plug, plugins) {
+    function() {
         …
     }
 ];
