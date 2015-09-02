@@ -7,5 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Simon Lepel <simbo@simbo.de> (http://simbo.de)",
-  "license": "MIT"
+  "license": "MIT",
+  "private": true
 }
