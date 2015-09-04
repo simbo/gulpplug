@@ -45,7 +45,6 @@
   "dependencies": {
     "arrayify": "^1.0.0",
     "auto-plug": "^1.1.0",
-    "chalk": "^1.1.1",
     "glob": "^5.0.14",
     "gulp-util": "^3.0.6",
     "run-sequence": "^1.1.2"
