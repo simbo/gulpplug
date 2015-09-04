@@ -16,10 +16,12 @@ var pkg = require('..')(gulp),
                 file: 'bar/baz.js',
                 name: 'bar:baz',
                 description: 'baz description',
+                dependencies: [],
                 fn: function() {}
             }, {
                 file: 'foo.js',
                 name: 'foo',
+                dependencies: [],
                 fn: function() {}
             }
         ],
@@ -34,12 +36,17 @@ var pkg = require('..')(gulp),
         exec: 'Starting \'help\'...\n' +
             '==================================================\n' +
             'Available Tasks:\n' +
+            'first ➜ First function\n' +
             'hello ➜ Awesome task\n' +
+            'move:foo ➜ moves foo.txt from src/ to dest/\n' +
             'help ➜ display help message\n' +
             '==================================================\n' +
             'Finished \'help\'\n' +
             'Starting \'default\'...\n' +
             'Finished \'default\'\n' +
+            'Starting \'first\'...\n' +
+            'I\'m running first…\n' +
+            'Finished \'first\'\n' +
             'Starting \'hello\'...\n' +
             'Hello!\n' +
             'Done.\n' +
@@ -49,7 +56,10 @@ var pkg = require('..')(gulp),
 describe(pkgName, function() {
 
     it('should automatically create tasks', function() {
-        pkg.tasksDir = path.join(fixturesDir, 'basic');
+        pkg.parseOptions({
+            cwd: fixturesDir,
+            tasksDir: 'basic'
+        });
         pkg.addTasks();
         assert.equal(JSON.stringify(pkg.getTasks()), JSON.stringify(expectations.tasks));
         assert.equal(pkg.gulp.hasTask('bar:baz') && pkg.gulp.hasTask('foo'), true);
