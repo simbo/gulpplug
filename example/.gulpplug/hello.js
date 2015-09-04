@@ -2,6 +2,7 @@
 
 module.exports = [
     'Awesome task',
+    'first',
     function(done) {
         this.util.log('Hello!');
         setTimeout(function() {
