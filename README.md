@@ -74,16 +74,17 @@ module.exports = function() {
 ```
 
 `this` is your current [`Plug`](#plug-class) instance, delivering `gulp`, 
-[`gulp-util`](https://github.com/gulpjs/gulp-util) and 
-[`chalk`](https://github.com/chalk/chalk) as properties. 
+[`gulp-util`](https://github.com/gulpjs/gulp-util),
+[`chalk`](https://github.com/chalk/chalk) and
+[`run-sequence`](https://github.com/OverZealous/run-sequence) as properties. 
 (As well as other properties and methods you may want to use - take a look at 
 the [sourcecode](https://github.com/simbo/gulpplug/blob/master/lib/plug.js).)
 
 ``` javascript
 module.exports = function(done) {
-    this.util.log(chalk.green('Starting async things…'));
+    this.util.log(this.chalk.green('Starting async things…'));
     setTimeout(function() {
-        this.util.log(chalk.red('Async stuff done.'));
+        this.util.log(this.chalk.red('Async stuff done.'));
         done();
     }.bind(this)), 100);
 };
@@ -131,16 +132,8 @@ can pass auto-plug options to the method.
 ### Plug Class
 
 By calling `require('gulpplug')(…)` you get a new instance of `Plug`, which 
-accepts up to 3 arguments:
-
-  - `gulp` (required)  
-    current gulp instance
-  - `tasksDir`  
-    path to tasks folder, relative to current working directory; defaults to 
-    `.gulpplug`
-  - `cwd`  
-    current working directory (where your `Gulpfile.js` and `package.json` 
-    are); defaults *gulpplug*'s parent module directory
+expects `gulp` as first argument and an optional options object as second 
+argument.
 
 You can also access the class directly.
 
@@ -148,9 +141,10 @@ You can also access the class directly.
 var path = require('path'),
     gulp = require('gulp'),
     Plug = require('gulpplug').Plug,
-    tasksDir = 'my-gulp-tasks',
-    cwd = path.dirname(__filename),
-    plug = new Plug(gulp, tasksDir, cwd);
+    plug = new Plug(gulp, {
+        cwd: path.dirname(__filename),
+        tasksDir: 'my-gulp-tasks'
+    });
 ```
 
 
