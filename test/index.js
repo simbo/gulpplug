@@ -56,7 +56,7 @@ var pkg = require('..')(gulp),
 describe(pkgName, function() {
 
     it('should automatically create tasks', function() {
-        pkg.parseOptions({
+        pkg.setOptions({
             cwd: fixturesDir,
             tasksDir: 'basic'
         });
@@ -66,7 +66,7 @@ describe(pkgName, function() {
     });
 
     it('should load gulp plugins and accept auto-plug options', function() {
-        pkg.cwd = path.dirname(path.dirname(__filename));
+        pkg.setOptions({cwd: path.dirname(path.dirname(__filename))});
         pkg.loadPlugins({lazy: false});
         assert.deepEqual(pkg.plugins, {util: require('gulp-util')});
     });
