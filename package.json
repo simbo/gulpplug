@@ -13,6 +13,7 @@
   "main": "index.js",
   "files": [
     "lib/plug.js",
+    "lib/task.js",
     "index.js",
     "README.md",
     "LICENSE"

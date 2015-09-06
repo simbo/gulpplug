@@ -13,14 +13,13 @@ var pkg = require('..')(gulp),
     expectations = {
         tasks: [
             {
-                file: 'bar/baz.js',
                 name: 'bar:baz',
                 description: 'baz description',
                 dependencies: [],
                 fn: function() {}
             }, {
-                file: 'foo.js',
                 name: 'foo',
+                description: null,
                 dependencies: [],
                 fn: function() {}
             }
