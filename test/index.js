@@ -26,21 +26,21 @@ var pkg = require('..')(gulp),
             }
         ],
         help: [
-            '==================================================\n',
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n',
             'Available Tasks:\n',
             'bar:baz ➜ baz description\n',
             'foo ➜ (no description)\n',
             'help ➜ display help message\n',
-            '==================================================\n'
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
         ],
         exec: 'Starting \'help\'...\n' +
-            '==================================================\n' +
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
             'Available Tasks:\n' +
             'first ➜ First function\n' +
             'hello ➜ Awesome task\n' +
             'move:foo ➜ moves foo.txt from src/ to dest/\n' +
             'help ➜ display help message\n' +
-            '==================================================\n' +
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
             'Finished \'help\'\n' +
             'Starting \'default\'...\n' +
             'Finished \'default\'\n' +
