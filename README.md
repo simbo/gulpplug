@@ -1,17 +1,18 @@
 gulpplug
 ========
 
-  > A small wrapper for 
+  > A toolkit for 
   > [gulp](https://github.com/gulpjs/gulp), 
-  > that requires tasks from files and auto-loads gulp plugins.
+  > which can require task files, auto-load gulp plugins and offer some sugar.
 
-<p align="center"><img src="https://raw.github.com/simbo/gulpplug/master/gulpplug.png" alt="gulpplug"></p>
+[![gulpplug](https://raw.github.com/simbo/gulpplug/master/gulpplug.png)](https://github.com/simbo/gulpplug)
 
 [![npm Package Version](https://img.shields.io/npm/v/gulpplug.svg?style=flat-square)](https://www.npmjs.com/package/gulpplug)
 [![MIT License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://simbo.mit-license.org)
+[![Travis Build Status](https://img.shields.io/travis/simbo/gulpplug/master.svg?style=flat-square)](https://travis-ci.org/simbo/gulpplug)
+
 [![Dependencies Status](https://img.shields.io/david/simbo/gulpplug.svg?style=flat-square)](https://david-dm.org/simbo/gulpplug)
 [![devDependencies Status](https://img.shields.io/david/dev/simbo/gulpplug.svg?style=flat-square)](https://david-dm.org/simbo/gulpplug#info=devDependencies)
-[![Travis Build Status](https://img.shields.io/travis/simbo/gulpplug/master.svg?style=flat-square)](https://travis-ci.org/simbo/gulpplug)
 [![Code Climate GPA](https://img.shields.io/codeclimate/github/simbo/gulpplug.svg?style=flat-square)](https://codeclimate.com/github/simbo/gulpplug)
 [![Code Climate Test Coverage](https://img.shields.io/codeclimate/coverage/github/simbo/gulpplug.svg?style=flat-square)](https://codeclimate.com/github/simbo/gulpplug)
 
@@ -19,8 +20,12 @@ gulpplug
 
 <!-- MarkdownTOC -->
 
+- [About *gulpplug*](#about-gulpplug)
 - [Install](#install)
+- [Quick Start](#quick-start)
 - [Usage](#usage)
+    - [Create your `Plug` instance](#create-your-plug-instance)
+    - [Options](#options)
     - [Defining Tasks](#defining-tasks)
     - [Help task and descriptions](#help-task-and-descriptions)
     - [Loading gulp plugins](#loading-gulp-plugins)
@@ -30,16 +35,33 @@ gulpplug
 <!-- /MarkdownTOC -->
 
 
+## About *gulpplug*
+
+*gulpplug*'s main purpose is to [glob](https://github.com/isaacs/node-glob) 
+some files and `require` them to create 
+[gulp](https://github.com/gulpjs/gulp) tasks. This way you can organize your 
+tasks in multiple files and folders. You can define task descriptions from 
+which *gulpplug* can creates a help task listing all available tasks.
+
+Within your task function context you can access your current instance of `Plug`
+, *gulpplug*'s main class, via `this` and find gulp at `this.gulp`.
+*gulpplug* also offers [gulp-util](https://github.com/gulpjs/gulp-util) 
+(`this.util`), [run-sequence](https://github.com/OverZealous/run-sequence) 
+(`this.runSequence`) and your gulp plugins (`this.plugins`), which can be 
+auto-loaded using [auto-plug](https://github.com/simbo/auto-plug).
+
+
 ## Install
 
+*gulpplug* doesn't include gulp and is useless without it, so you obviously 
+have to install both. Use npm:
+
 ``` bash
-npm install --save gulpplug
+npm i -S gulp gulpplug
 ```
 
-You still need `gulp` as a dependency of your project.
 
-
-## Usage
+## Quick Start
 
 Your `Gulpfile.js` could look like this:
 
@@ -47,8 +69,51 @@ Your `Gulpfile.js` could look like this:
 var gulp = require('gulp'),
     plug = require('gulpplug')(gulp);
 
-plug.loadPlugins().addTasks();
+plug.loadPlugins()
+    .addTasks()
+    .addHelpTask();
 ```
+
+Let's say, you want to create a gulp task called `minify` to pipe some 
+javascript files through `gulp-uglify`, which you have installed as dependency. 
+
+Go ahead and create the file `.gulpplug/minify.js` containing:
+
+``` javascript
+module.exports = function() {
+    return this.gulp.src('./src/*.js')
+        .pipe(this.plugins.uglify())
+        .pipe(this.gulp.dest('./dist'));
+}
+```
+
+
+## Usage
+
+
+### Create your `Plug` instance
+
+`Plug` is *gulpplug*'s main class. It needs your current gulp instance as first
+argument and accepts an options object as second argument.
+
+You can create your `Plug` instance by calling the required main function…
+
+``` javascript
+var gulp = require('gulp'),
+    plug = require('gulpplug')(gulp);
+```
+
+…or require the class definition and call `new`:
+
+``` javascript
+var gulp = require('gulp'),
+    Plug = require('gulpplug').Plug
+    plug = new Plug(gulp);
+```
+
+
+### Options
+
 
 *gulpplug* looks for a folder called `.gulpplug/` in the same directory where
 your `Gulpfile.js` is.
@@ -74,9 +139,8 @@ module.exports = function() {
 ```
 
 `this` is your current [`Plug`](#plug-class) instance, delivering `gulp`, 
-[`gulp-util`](https://github.com/gulpjs/gulp-util),
-[`chalk`](https://github.com/chalk/chalk) and
-[`run-sequence`](https://github.com/OverZealous/run-sequence) as properties. 
+[`gulp-util`](https://github.com/gulpjs/gulp-util) and
+[`run-sequence`]() as properties. 
 (As well as other properties and methods you may want to use - take a look at 
 the [sourcecode](https://github.com/simbo/gulpplug/blob/master/lib/plug.js).)
 
@@ -125,8 +189,8 @@ module.exports = [
 ### Loading gulp plugins
 
 By calling `plug.loadPlugins()`, [auto-plug](https://github.com/simbo/auto-plug)
-will be used to load gulp plugins defined in your projects `package.json`. You
-can pass auto-plug options to the method.
+will be used to load gulp plugins defined in your project's `package.json`. You
+can set auto-plug options as first argument.
 
 
 ### Plug Class
@@ -150,4 +214,4 @@ var path = require('path'),
 
 ## License
 
-[MIT](http://simbo.mit-license.org/)
+[MIT &copy; 2015 Simon Lepel](http://simbo.mit-license.org/)
