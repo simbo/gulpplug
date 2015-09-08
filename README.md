@@ -217,5 +217,3 @@ var path = require('path'),
 ## License
 
 [MIT &copy; 2015 Simon Lepel](http://simbo.mit-license.org/)
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/simbo/gulpplug/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
