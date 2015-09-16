@@ -4,7 +4,7 @@
   "keywords": [],
   "author": "Simon Lepel <simbo@simbo.de> (http://simbo.de)",
   "license": "MIT",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "repository": {
     "type": "git",
     "url": "git://github.com/simbo/gulpplug.git"
