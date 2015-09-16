@@ -65,7 +65,7 @@ describe(pkgName, function() {
     });
 
     it('should load gulp plugins and accept auto-plug options', function() {
-        pkg.setOptions({cwd: path.dirname(path.dirname(__filename))});
+        pkg.setOptions({module: module});
         pkg.loadPlugins({lazy: false});
         assert.deepEqual(pkg.plugins, {util: require('gulp-util')});
     });
