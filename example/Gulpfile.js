@@ -1,8 +1,9 @@
 'use strict';
 
-var gulp = require('gulp'),
-    plug = require('..')(gulp);
+var gulp = require('gulp');
+
+var plug = require('..')(gulp);
 
 plug.loadPlugins()
-	.addTasks()
-	.addHelpTask();
+  .addTasks()
+  .addHelpTask();
