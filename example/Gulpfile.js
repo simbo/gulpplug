@@ -7,3 +7,5 @@ var plug = require('..')(gulp);
 plug.loadPlugins()
   .addTasks()
   .addHelpTask();
+
+plug.addSequence('a-seq', ['hello', ['first', 'move:foo']]);

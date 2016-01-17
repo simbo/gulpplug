@@ -27,6 +27,7 @@ var pkgName = pkgJson.name,
       help: [
         '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n',
         'Available Tasks:\n',
+        'a-seq ➜ help, [foo + bar:baz]\n',
         'bar:baz ➜ baz description\n',
         'foo ➜ (no description)\n',
         'help ➜ display help message\n',
@@ -35,10 +36,11 @@ var pkgName = pkgJson.name,
       exec: 'Starting \'help\'...\n' +
         '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
         'Available Tasks:\n' +
+        'a-seq ➜ hello, [first + move:foo]\n' +
         'first ➜ First function\n' +
         'hello ➜ Awesome task\n' +
-        'move:foo ➜ moves foo.txt from src/ to dest/\n' +
         'help ➜ display help message\n' +
+        'move:foo ➜ moves foo.txt from src/ to dest/\n' +
         '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
         'Finished \'help\'\n' +
         'Starting \'default\'...\n' +
@@ -73,6 +75,11 @@ describe(pkgName, function() {
   it('should add a help task', function() {
     pkg.addHelpTask();
     assert.equal(pkg.gulp.hasTask('help'), true);
+  });
+
+  it('should add a sequence', function() {
+    pkg.addSequence('a-seq', ['help', ['foo', 'bar:baz']]);
+    assert.equal(pkg.gulp.hasTask('a-seq'), true);
   });
 
   it('should display a help message', function(done) {
