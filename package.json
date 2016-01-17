@@ -12,8 +12,7 @@
   "bugs": "https://github.com/simbo/gulpplug/issues",
   "main": "index.js",
   "files": [
-    "lib/plug.js",
-    "lib/task.js",
+    "lib/",
     "index.js",
     "README.md",
     "LICENSE"
