@@ -42,11 +42,11 @@ gulpplug
 *gulpplug*'s main purpose is to [glob](https://github.com/isaacs/node-glob) 
 some files and `require` them to create 
 [gulp](https://github.com/gulpjs/gulp) tasks. This way you can organize your 
-tasks in multiple files and folders. You can define task descriptions from 
-which *gulpplug* can creates a help task listing all available tasks.
+tasks in multiple files and folders. You can also define task descriptions from 
+which *gulpplug* can create a help task listing all available tasks.
 
-Within your task function context you can access your current instance of `Plug`
-, *gulpplug*'s main class, via `this` and find gulp at `this.gulp`.
+Within your task function context you can access your current instance of 
+`Plug`, *gulpplug*'s main class, via `this` and find gulp at `this.gulp`.
 *gulpplug* also offers [gulp-util](https://github.com/gulpjs/gulp-util) 
 (`this.util`), [run-sequence](https://github.com/OverZealous/run-sequence) 
 (`this.runSequence`) and your gulp plugins (`this.plugins`), which can be 
